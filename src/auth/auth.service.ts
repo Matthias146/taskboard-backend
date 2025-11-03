@@ -30,11 +30,9 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto): Promise<User> {
-    const hashedPassword: string = await bcrypt.hash(dto.password, 10);
-
     const user = this.userRepo.create({
       email: dto.email,
-      password: hashedPassword,
+      password: await bcrypt.hash(dto.password, 10),
       role: dto.role ?? UserRole.USER,
     });
 
