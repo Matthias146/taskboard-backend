@@ -15,7 +15,6 @@ export class Task {
   @Column({ default: false })
   completed: boolean;
 
-  // ⚙️ Relation: viele Tasks gehören zu einem User
   @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'CASCADE' })
   user: User;
 }

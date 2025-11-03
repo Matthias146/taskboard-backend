@@ -26,11 +26,10 @@ import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 @ApiTags('Tasks')
 @ApiBearerAuth('JWT-auth')
 @Controller('tasks')
-@UseGuards(JwtAuthGuard) // 🔐 Gilt für alle Routen in diesem Controller
+@UseGuards(JwtAuthGuard)
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-  // 🟢 Task erstellen
   @Post()
   @ApiOperation({ summary: 'Erstellt einen neuen Task' })
   @ApiResponse({
@@ -59,7 +58,6 @@ export class TasksController {
     return this.tasksService.create(dto.title, user.userId);
   }
 
-  // 🟣 Alle Tasks des eingeloggten Users abrufen
   @Get()
   @ApiOperation({ summary: 'Gibt alle Tasks des eingeloggten Users zurück' })
   @ApiResponse({
@@ -90,7 +88,6 @@ export class TasksController {
     return this.tasksService.findAllForUser(user.userId);
   }
 
-  // 🔵 Einen Task nach ID abrufen
   @Get(':id')
   @ApiOperation({ summary: 'Hole einen bestimmten Task (nur eigene)' })
   @ApiResponse({
@@ -104,7 +101,6 @@ export class TasksController {
     return this.tasksService.findOne(id, user.userId);
   }
 
-  // 🟡 Task aktualisieren
   @Patch(':id')
   @ApiOperation({ summary: 'Aktualisiert einen Task (Titel oder Status)' })
   @ApiResponse({
@@ -122,7 +118,6 @@ export class TasksController {
     return this.tasksService.update(id, dto, user.userId);
   }
 
-  // 🔴 Task löschen
   @Delete(':id')
   @ApiOperation({ summary: 'Löscht einen Task des eingeloggten Users' })
   @ApiResponse({ status: 204, description: 'Task erfolgreich gelöscht.' })

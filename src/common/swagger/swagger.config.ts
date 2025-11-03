@@ -5,7 +5,6 @@ const authDoc = loadMarkdown('auth-swagger.md');
 const tasksDoc = loadMarkdown('tasks-swagger.md');
 const usersDoc = loadMarkdown('users-swagger.md');
 
-// 🧩 Dokumentkonfiguration
 export const swaggerConfig = new DocumentBuilder()
   .setTitle('Task API')
   .setDescription(
@@ -37,7 +36,6 @@ export const swaggerConfig = new DocumentBuilder()
   )
   .build();
 
-// 💄 Optisches Styling für Swagger UI
 export const swaggerCustomOptions: SwaggerCustomOptions = {
   customSiteTitle: 'Task API – Swagger',
   customCss: `

@@ -49,7 +49,6 @@ export class AuthController {
     return { id: user.id, email: user.email, role: user.role };
   }
 
-  // 🔹 Login
   @Post('login')
   @ApiResponse({
     status: 200,
@@ -62,14 +61,12 @@ export class AuthController {
     const valid = await bcrypt.compare(body.password, user.password);
     if (!valid) throw new UnauthorizedException('Invalid credentials');
 
-    // 🟩 Jetzt auch role im Token speichern
     const payload = { sub: user.id, email: user.email, role: user.role };
     const token = await this.jwtService.signAsync(payload);
 
     return { access_token: token };
   }
 
-  // 🔹 Profil abrufen
   @UseGuards(JwtAuthGuard)
   @Get('me')
   @ApiResponse({ status: 200, description: 'Aktuell eingeloggter Benutzer.' })

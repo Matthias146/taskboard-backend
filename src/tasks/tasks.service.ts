@@ -12,16 +12,14 @@ export class TasksService {
     private readonly taskRepo: Repository<Task>,
   ) {}
 
-  // 🟢 Task erstellen (nur mit userId)
   async create(title: string, userId: number): Promise<Task> {
     const task = this.taskRepo.create({
       title,
-      user: { id: userId } as unknown as User, // 👈 sichere ID-Referenz
+      user: { id: userId } as unknown as User,
     });
     return await this.taskRepo.save(task);
   }
 
-  // 🟣 Alle Tasks eines Users abrufen
   async findAllForUser(userId: number): Promise<Task[]> {
     return await this.taskRepo.find({
       where: { user: { id: userId } },
@@ -29,7 +27,6 @@ export class TasksService {
     });
   }
 
-  // 🔵 Einen Task abrufen (gehört User?)
   async findOne(id: number, userId: number): Promise<Task> {
     const task = await this.taskRepo.findOne({
       where: { id, user: { id: userId } },
@@ -50,7 +47,6 @@ export class TasksService {
     return await this.taskRepo.save(task);
   }
 
-  // 🟠 Task löschen (nur eigene)
   async remove(id: number, userId?: number): Promise<void> {
     const task = await this.taskRepo.findOne({
       where: { id, ...(userId ? { user: { id: userId } } : {}) },
