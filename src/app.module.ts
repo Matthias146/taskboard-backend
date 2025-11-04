@@ -7,6 +7,9 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TasksModule } from './tasks/tasks.module';
 import { RolesGuard } from './auth/guards/roles.guard';
+import { AdminController } from './admin/admin.controller';
+import { AdminService } from './admin/admin.service';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -22,8 +25,13 @@ import { RolesGuard } from './auth/guards/roles.guard';
     UsersModule,
     AuthModule,
     TasksModule,
+    AdminModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, { provide: 'APP_GUARD', useClass: RolesGuard }],
+  controllers: [AppController, AdminController],
+  providers: [
+    AppService,
+    { provide: 'APP_GUARD', useClass: RolesGuard },
+    AdminService,
+  ],
 })
 export class AppModule {}
