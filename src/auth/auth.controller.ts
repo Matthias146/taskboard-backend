@@ -3,9 +3,9 @@ import {
   Controller,
   Post,
   Req,
-  UnauthorizedException,
   UseGuards,
   Get,
+  ForbiddenException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -15,6 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import type { Request } from 'express';
 import { UserRole } from '../users/entity/user.entity';
 import { OptionalJwtAuthGuard } from './jwt/optional-jwt.guard';
+import { RolesGuard } from './guards/roles.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -31,9 +32,10 @@ export class AuthController {
       | { userId: number; role: UserRole }
       | undefined;
 
+    // 🔹 Fall 1: Kein eingeloggter User → normale Registrierung (nur USER)
     if (!currentUser) {
       if (dto.role && dto.role !== UserRole.USER) {
-        throw new UnauthorizedException(
+        throw new ForbiddenException(
           'Nur Admins dürfen Admin-Accounts erstellen.',
         );
       }
@@ -45,12 +47,16 @@ export class AuthController {
       return { id: user.id, email: user.email, role: user.role };
     }
 
-    if (currentUser.role !== UserRole.ADMIN && dto.role === UserRole.ADMIN) {
-      throw new UnauthorizedException(
-        'Nur Admins dürfen andere Admins anlegen.',
-      );
+    // 🔹 Fall 2: Eingeloggt, aber kein Admin
+    if (currentUser.role !== UserRole.ADMIN) {
+      if (dto.role && dto.role !== UserRole.USER) {
+        throw new ForbiddenException(
+          'Nur Admins dürfen Admin-Accounts erstellen.',
+        );
+      }
     }
 
+    // 🔹 Fall 3: Admin darf beliebige Rolle anlegen
     const user = await this.authService.register(dto);
     return { id: user.id, email: user.email, role: user.role };
   }
@@ -60,7 +66,7 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth('JWT-auth')
   @Get('me')
   getProfile(@Req() req: Request) {
