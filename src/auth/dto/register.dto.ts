@@ -5,6 +5,7 @@ import {
   MinLength,
   IsOptional,
   IsEnum,
+  IsNotEmpty,
 } from 'class-validator';
 import { UserRole } from '../../users/entity/user.entity';
 
@@ -13,6 +14,10 @@ export class RegisterDto {
     example: 'max@example.com',
     description: 'E-Mail-Adresse des Benutzers',
   })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
   @IsEmail()
   email: string;
 
