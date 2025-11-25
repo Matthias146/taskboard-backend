@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsIn,
+  IsISO8601,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 import type { TaskStatus } from '../entiity/task.entity';
 
 export class CreateTaskDto {
@@ -16,6 +22,10 @@ export class CreateTaskDto {
   description?: string;
 
   @IsOptional()
-  @IsIn(['todo', 'in-progress', 'done'])
+  @IsISO8601()
+  dueDate?: string;
+
+  @IsOptional()
+  @IsIn(['open', 'in_progress', 'done'])
   status?: TaskStatus;
 }

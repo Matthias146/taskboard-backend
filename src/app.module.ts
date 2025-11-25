@@ -9,6 +9,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { AdminController } from './admin/admin.controller';
 import { AdminModule } from './admin/admin.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AdminModule } from './admin/admin.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    ScheduleModule.forRoot(),
     UsersModule,
     AuthModule,
     TasksModule,
