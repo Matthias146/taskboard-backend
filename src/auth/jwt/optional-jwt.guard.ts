@@ -8,12 +8,10 @@ export class OptionalJwtAuthGuard extends JwtAuthGuard {
     const req = context.switchToHttp().getRequest<Request>();
     const authHeader = req.headers.authorization;
 
-    // 🔓 Wenn kein Token im Header → Zugriff erlauben
     if (!authHeader) {
       return true;
     }
 
-    // 🔐 Wenn Token vorhanden → normale Prüfung
     return super.canActivate(context);
   }
 
