@@ -14,6 +14,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import type { Request } from 'express';
+import { User } from '../users/entity/user.entity';
 
 interface JwtUser {
   userId: number;
@@ -36,7 +37,7 @@ export class TasksController {
   @Post()
   create(@Body() dto: CreateTaskDto, @Req() req: Request) {
     const user = req.user as JwtUser;
-    return this.tasksService.create(dto, user.userId);
+    return this.tasksService.create(dto, { id: user.userId } as User);
   }
 
   @Patch(':id')
