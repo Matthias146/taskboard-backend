@@ -32,9 +32,6 @@ export class Task {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @Column()
-  userId: number;
-
   @Column({ nullable: true, type: 'datetime' })
   dueDate?: Date;
 
