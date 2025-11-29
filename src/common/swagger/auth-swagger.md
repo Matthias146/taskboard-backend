@@ -1,4 +1,4 @@
-# 🔐 Auth API
+# Auth API
 
 Hier findest du alle Endpunkte für die Authentifizierung:
 

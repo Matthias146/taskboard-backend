@@ -15,7 +15,7 @@ export class TaskReminderService {
 
   @Cron('0 9 * * *')
   async handleCron() {
-    this.logger.debug('🔍 Prüfe auf überfällige Tasks...');
+    this.logger.debug('Prüfe auf überfällige Tasks...');
 
     const now = new Date();
 
@@ -28,13 +28,11 @@ export class TaskReminderService {
     });
 
     if (overdueTasks.length === 0) {
-      this.logger.log('✅ Keine überfälligen Tasks gefunden.');
+      this.logger.log('Keine überfälligen Tasks gefunden.');
       return;
     }
 
-    this.logger.warn(
-      `⚠️ Habe ${overdueTasks.length} überfällige Tasks gefunden!`,
-    );
+    this.logger.warn(`Habe ${overdueTasks.length} überfällige Tasks gefunden!`);
 
     for (const task of overdueTasks) {
       this.sendEmailReminder(task);
@@ -47,12 +45,12 @@ export class TaskReminderService {
     const dateString = task.dueDate?.toLocaleDateString('de-DE') ?? 'Unbekannt';
 
     console.log(`
-    📧 --------------------------------------------------
-    📧 AN:      ${email}
-    📧 BETREFF: ${subject}
-    📧 TEXT:    Hey ${task.user.name}, dein Task "${task.title}" war am ${dateString} fällig!
-    📧          Bitte erledige ihn schnell.
-    📧 --------------------------------------------------
+    --------------------------------------------------
+    AN:      ${email}
+    BETREFF: ${subject}
+    TEXT:    Hey ${task.user.name}, dein Task "${task.title}" war am ${dateString} fällig!
+            Bitte erledige ihn schnell.
+    --------------------------------------------------
     `);
   }
 }

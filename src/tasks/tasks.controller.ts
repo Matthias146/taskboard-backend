@@ -29,7 +29,7 @@ export class TasksController {
   @Get()
   findAll(@Req() req: Request) {
     const user = req.user as JwtUser;
-    console.log('➡️ findAll wurde aufgerufen für User:', user.userId);
+    console.log('findAll wurde aufgerufen für User:', user.userId);
     return this.tasksService.findAll(user.userId);
   }
 

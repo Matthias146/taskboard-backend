@@ -8,7 +8,7 @@ import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: '*', // Erlaubt deinem Angular Frontend (localhost:4200) den Zugriff
+    origin: '*',
   },
 })
 export class TasksGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -23,7 +23,6 @@ export class TasksGateway implements OnGatewayConnection, OnGatewayDisconnect {
     console.log('Client disconnected:', client.id);
   }
 
-  // Diese Funktion rufen wir gleich aus deinem Service auf
   notifyTaskUpdated() {
     this.server.emit('tasks-update', { message: 'New data available' });
   }

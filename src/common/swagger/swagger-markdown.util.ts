@@ -17,7 +17,7 @@ export function loadMarkdown(fileName: string): string {
     const content = fs.readFileSync(filePath, 'utf-8');
     return marked.parse(content) as string;
   } catch (err) {
-    console.error(`⚠️ Fehler beim Laden von ${fileName}:`, err);
+    console.error(`Fehler beim Laden von ${fileName}:`, err);
     return '';
   }
 }

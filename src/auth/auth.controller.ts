@@ -36,7 +36,6 @@ export class AuthController {
       | { userId: number; role: UserRole }
       | undefined;
 
-    // 🔹 Fall 1: Kein eingeloggter User → normale Registrierung (nur USER)
     if (!currentUser) {
       if (dto.role && dto.role !== UserRole.USER) {
         throw new ForbiddenException(
@@ -51,7 +50,6 @@ export class AuthController {
       return { id: user.id, email: user.email, role: user.role };
     }
 
-    // 🔹 Fall 2: Eingeloggt, aber kein Admin
     if (currentUser.role !== UserRole.ADMIN) {
       if (dto.role && dto.role !== UserRole.USER) {
         throw new ForbiddenException(
@@ -60,7 +58,6 @@ export class AuthController {
       }
     }
 
-    // 🔹 Fall 3: Admin darf beliebige Rolle anlegen
     const user = await this.authService.register(dto);
     return { id: user.id, email: user.email, role: user.role };
   }

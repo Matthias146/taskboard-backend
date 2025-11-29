@@ -10,7 +10,7 @@ export const swaggerConfig = new DocumentBuilder()
   .setDescription(
     `
   <div class="markdown-body">
-  <h1>📘 Task API Dokumentation</h1>
+  <h1>Task API Dokumentation</h1>
   </hr>
    ${authDoc}
   </div>

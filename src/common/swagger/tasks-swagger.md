@@ -1,4 +1,4 @@
-# ✅ Tasks API
+# Tasks API
 
 Diese Endpunkte ermöglichen das Erstellen, Abrufen, Aktualisieren und Löschen von Tasks.
 
@@ -8,4 +8,4 @@ Diese Endpunkte ermöglichen das Erstellen, Abrufen, Aktualisieren und Löschen 
 - `PATCH /tasks/:id` → Bestehenden Task aktualisieren  
 - `DELETE /tasks/:id` → Task löschen  
 
-💡 Alle Task-Endpunkte sind nur mit gültigem JWT aufrufbar.
+Alle Task-Endpunkte sind nur mit gültigem JWT aufrufbar.

@@ -24,12 +24,12 @@ async function bootstrap() {
       await usersService.create({
         email: adminEmail,
         password: await bcrypt.hash(adminPassword, 10),
-        name: adminName, // 🆕 Name hinzufügen
+        name: adminName,
         role: UserRole.ADMIN,
       });
-      console.log(`✅ Admin "${adminName}" (${adminEmail}) erstellt`);
+      console.log(`Admin "${adminName}" (${adminEmail}) erstellt`);
     } else {
-      console.log(`ℹ️ Admin "${adminEmail}" existiert bereits`);
+      console.log(`Admin "${adminEmail}" existiert bereits`);
     }
   }
 
@@ -42,9 +42,9 @@ async function bootstrap() {
         name: userName, // 🆕 Name hinzufügen
         role: UserRole.USER,
       });
-      console.log(`✅ User "${userName}" (${userEmail}) erstellt`);
+      console.log(`User "${userName}" (${userEmail}) erstellt`);
     } else {
-      console.log(`ℹ️ User "${userEmail}" existiert bereits`);
+      console.log(`User "${userEmail}" existiert bereits`);
     }
   }
 
