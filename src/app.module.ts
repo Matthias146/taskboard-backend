@@ -10,6 +10,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { AdminController } from './admin/admin.controller';
 import { AdminModule } from './admin/admin.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ContactsModule } from './contacts/contacts.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthModule,
     TasksModule,
     AdminModule,
+    ContactsModule,
   ],
   controllers: [AppController, AdminController],
   providers: [AppService, { provide: 'APP_GUARD', useClass: RolesGuard }],
