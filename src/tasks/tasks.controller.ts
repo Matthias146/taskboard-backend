@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Controller,
   Get,
@@ -16,10 +14,9 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import type { Request } from 'express';
-import { User } from '../users/entity/user.entity';
 
 interface JwtUser {
-  id: number;
+  userId: number;
   email: string;
   role: string;
 }
@@ -32,15 +29,14 @@ export class TasksController {
   @Get()
   findAll(@Req() req: Request) {
     const user = req.user as JwtUser;
-    console.log('➡️ findAll wurde aufgerufen für User:', user.id);
-    return this.tasksService.findAll(user.id);
+    console.log('➡️ findAll wurde aufgerufen für User:', user.userId);
+    return this.tasksService.findAll(user.userId);
   }
 
   @Post()
   create(@Body() dto: CreateTaskDto, @Req() req: Request) {
-    const userPayload = req.user as any;
-    const userEntity = { id: userPayload.userId } as User;
-    return this.tasksService.create(dto, userEntity);
+    const user = req.user as JwtUser;
+    return this.tasksService.create(dto, user.userId);
   }
 
   @Patch(':id')
@@ -50,12 +46,12 @@ export class TasksController {
     @Req() req: Request,
   ) {
     const user = req.user as JwtUser;
-    return this.tasksService.update(id, dto, user.id);
+    return this.tasksService.update(id, dto, user.userId);
   }
 
   @Delete(':id')
   remove(@Param('id') id: number, @Req() req: Request) {
     const user = req.user as JwtUser;
-    return this.tasksService.remove(id, user.id);
+    return this.tasksService.remove(id, user.userId);
   }
 }

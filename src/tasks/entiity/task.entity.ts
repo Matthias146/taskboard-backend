@@ -8,7 +8,6 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../../users/entity/user.entity';
-import { Contact } from '../../contacts/entity/contact.entity';
 
 export type TaskStatus = 'open' | 'in-progress' | 'done';
 @Entity()
@@ -32,6 +31,9 @@ export class Task {
   @JoinColumn({ name: 'userId' })
   user: User;
 
+  @Column()
+  userId: number;
+
   @Column({ nullable: true, type: 'datetime' })
   dueDate?: Date;
 
@@ -40,7 +42,4 @@ export class Task {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @ManyToOne(() => Contact, { nullable: true, onDelete: 'SET NULL' })
-  contact?: Contact | null;
 }

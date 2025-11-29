@@ -8,7 +8,6 @@ import {
 } from 'typeorm';
 import { Task } from '../../tasks/entiity/task.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { Contact } from '../../contacts/entity/contact.entity';
 
 export enum UserRole {
   USER = 'user',
@@ -41,7 +40,4 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt!: Date;
-
-  @OneToMany(() => Contact, (contact) => contact.user)
-  contacts: Contact[];
 }
